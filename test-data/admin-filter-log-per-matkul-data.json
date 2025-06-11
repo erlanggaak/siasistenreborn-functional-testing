@@ -1,0 +1,24 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "siasisten"
+  },
+  "filter": {
+    "term": "2024/2025 - Genap"
+  },
+  "course": {
+    "code": "CSCM603228"
+  },
+  "filterLog": {
+    "status": "Telah Disetujui",
+    "approvalStatus": "Full Approval",
+    "sortBy": "Nama (A-Z)"
+  },
+  "student": {
+    "name": "Erlangga Ahmad Khadafi",
+    "id": "2106750894",
+    "logDescription": "asist 23",
+    "partialMinutes": 30,
+    "partialReason": "Partial approval for testing"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@fixtures/*": ["src/fixtures/*"],
+      "@pages/*": ["src/pages/*"],
+      "@tests/*": ["tests/*"],
+      "@testData/*": ["test-data/*"],
+    },
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+  }
+}
