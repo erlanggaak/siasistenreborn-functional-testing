@@ -1,0 +1,21 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "siasisten"
+  },
+  "students": [
+    { "name": "Adiarja Halim" },
+    { "name": "Naira Haura" },
+    { "name": "Erlangga Ahmad Khadafi" }
+  ],
+  "changes": {
+    "single": {
+      "jenjang": "Mahasiswa S1",
+      "pengalaman": "Senior"
+    },
+    "bulk": {
+      "jenjang": "Mahasiswa S1",
+      "pengalaman": "Junior"
+    }
+  }
+}

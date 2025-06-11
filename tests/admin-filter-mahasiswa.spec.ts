@@ -1,71 +1,60 @@
-// tests/admin-change-detail-mahasiswa.spec.ts
 import { test, expect } from '@fixtures/PageFixtures';
-import { validAdmin } from '../src/fixtures/credentials';
+import testData from 'test-data/admin-filter-mahasiswa-data.json';
 
-test.describe('Admin Filter Mahasiswa di Halaman Daftar List Mahasiswa', () => {
+const { admin, searches, filters, expectedStudent } = testData;
+
+test.describe('Admin – Filter Mahasiswa di Daftar Mahasiswa', () => {
   /* ═════════ PRE-CONDITION ═════════ */
   test.beforeEach(async ({ loginPage, page, daftarMahasiswaPage }) => {
-    // 1) Login
+    // 1) Login sebagai admin
     await loginPage.open();
-    await loginPage.login(validAdmin.username, validAdmin.password);
+    await loginPage.login(admin.username, admin.password);
     await expect(page).toHaveURL(/admin\/dashboard/);
 
     // 2) Buka halaman Daftar Mahasiswa
     await daftarMahasiswaPage.open();
     await expect(page.getByText('Daftar Mahasiswa')).toBeVisible();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(5_000);
   });
 
   test('Admin filter mahasiswa berdasarkan nama, NPM, dan email', async ({ page, daftarMahasiswaPage }) => {
     await test.step('Admin mencari mahasiswa berdasarkan nama', async () => {
-      await daftarMahasiswaPage.typeSearch('Adiarja Halim');
+      await daftarMahasiswaPage.typeSearch(searches.byName);
       await daftarMahasiswaPage.clickCari();
-      await page.waitForTimeout(5000);
-      await expect(
-        daftarMahasiswaPage.rowByName('Adiarja Halim')
-      ).toBeVisible();
+      await page.waitForTimeout(5_000);
+      await expect(daftarMahasiswaPage.rowByName(expectedStudent)).toBeVisible();
     });
 
     await test.step('Admin mencari mahasiswa berdasarkan NPM', async () => {
-      await daftarMahasiswaPage.typeSearch('2401920398');
+      await daftarMahasiswaPage.typeSearch(searches.byNpm);
       await daftarMahasiswaPage.clickCari();
-      await page.waitForTimeout(5000);
-      await expect(
-        daftarMahasiswaPage.rowByName('Adiarja Halim')
-      ).toBeVisible();
+      await page.waitForTimeout(5_000);
+      await expect(daftarMahasiswaPage.rowByName(expectedStudent)).toBeVisible();
     });
 
     await test.step('Admin mencari mahasiswa berdasarkan email', async () => {
-      await daftarMahasiswaPage.typeSearch('mahasiswa2@gmail.com');
+      await daftarMahasiswaPage.typeSearch(searches.byEmail);
       await daftarMahasiswaPage.clickCari();
-      await page.waitForTimeout(5000);
-      await expect(
-        daftarMahasiswaPage.rowByName('Adiarja Halim')
-      ).toBeVisible();
+      await page.waitForTimeout(5_000);
+      await expect(daftarMahasiswaPage.rowByName(expectedStudent)).toBeVisible();
     });
   });
 
-  test('Admin filter mahasiswa berdasarkan program studi', async ({ page, daftarMahasiswaPage }) => {
-    await test.step('Admin menyaring mahasiswa berdasarkan nama', async () => {
-      await daftarMahasiswaPage.selectProgramStudi('S1 Reguler - Ilmu Komputer');
-      await page.waitForTimeout(5000);
-      await daftarMahasiswaPage.expectColumnAllContains('Program Studi', 'S1 Reguler - Ilmu Komputer');
-    });
+  test('Admin filter mahasiswa by Program Studi', async ({ page, daftarMahasiswaPage }) => {
+    await daftarMahasiswaPage.selectProgramStudi(filters.programStudi);
+    await page.waitForTimeout(5_000);
+    await daftarMahasiswaPage.expectColumnAllContains('Program Studi', filters.programStudi);
   });
 
-  test('Admin filter mahasiswa berdasarkan jenjang', async ({ page, daftarMahasiswaPage }) => {
-    await test.step('Admin menyaring mahasiswa berdasarkan jenjang pendidikan', async () => {
-      await daftarMahasiswaPage.selectJenjang('Mahasiswa S1');
-      await page.waitForTimeout(5000);
-      await daftarMahasiswaPage.expectColumnAllContains('Jenjang Mahasiswa', 'Mahasiswa S1');
-    });
+  test('Admin filter mahasiswa by Jenjang Pendidikan', async ({ page, daftarMahasiswaPage }) => {
+    await daftarMahasiswaPage.selectJenjang(filters.jenjang);
+    await page.waitForTimeout(5_000);
+    await daftarMahasiswaPage.expectColumnAllContains('Jenjang Mahasiswa', filters.jenjang);
   });
 
-  test('Admin filter mahasiswa berdasarkan pengalaman', async ({ page, daftarMahasiswaPage }) => {
-    await test.step('Admin menyaring mahasiswa berdasarkan pengalaman', async () => {
-      await daftarMahasiswaPage.selectPengalaman('Junior');
-      await page.waitForTimeout(5000);
-      await daftarMahasiswaPage.expectColumnAllContains('Pengalaman', 'Junior');
-    });
+  test('Admin filter mahasiswa by Pengalaman', async ({ page, daftarMahasiswaPage }) => {
+    await daftarMahasiswaPage.selectPengalaman(filters.pengalaman);
+    await page.waitForTimeout(5_000);
+    await daftarMahasiswaPage.expectColumnAllContains('Pengalaman', filters.pengalaman);
   });
 });

@@ -1,4 +1,3 @@
-// tests/admin-filter-log.spec.ts
 import { test, expect } from '@fixtures/PageFixtures';
 import testData from 'test-data/admin-filter-log-per-matkul-data.json';
 

@@ -1,0 +1,17 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "siasisten"
+  },
+  "searches": {
+    "byName": "Adiarja Halim",
+    "byNpm": "2401920398",
+    "byEmail": "mahasiswa2@gmail.com"
+  },
+  "filters": {
+    "programStudi": "S1 Reguler - Ilmu Komputer",
+    "jenjang": "Mahasiswa S1",
+    "pengalaman": "Junior"
+  },
+  "expectedStudent": "Adiarja Halim"
+}
