@@ -160,6 +160,15 @@ export class DaftarLogMahasiswaPage extends BasePage {
     });
   }
 
+  private rowByDateTime = (name: string, date: string, time: string): Locator => {
+    const dateRx = new RegExp(`^${date}\\s*$`, 'i');
+    const timeRx = new RegExp(`^${time}\\s*$`, 'i');
+
+    return this.rows(name)
+      .filter({ has: this.page.locator('td', { hasText: dateRx }) })
+      .filter({ has: this.page.locator('td', { hasText: timeRx }) });
+  };
+
   private async clickRowAction(
     name: string,
     desc: string,
@@ -169,9 +178,19 @@ export class DaftarLogMahasiswaPage extends BasePage {
     await row.locator(`img[alt="${alt}"]`).click({ force: true });
   }
 
+  private async clickRowActionByDatetime(
+    name: string,
+    date: string,
+    time: string,
+    alt: 'partial-approve' | 'approve' | 'reject' | 'message'
+  ) {
+    const row = this.rowByDateTime(name, date, time);
+    await row.locator(`img[alt="${alt}"]`).click({ force: true });
+  }
+
   // Convenience wrappers
-  async partialApprove(name: string, desc: string) {
-    await this.clickRowAction(name, desc, 'partial-approve');
+  async partialApprove(name: string, date: string, time: string) {
+    await this.clickRowActionByDatetime(name, date, time, 'partial-approve');
   }
   async approve(name: string, desc: string) {
     await this.clickRowAction(name, desc, 'approve');
@@ -188,7 +207,10 @@ export class DaftarLogMahasiswaPage extends BasePage {
     await expect(this.partialApproveHeader).toBeVisible();
     await this.durationInput.fill(String(duration));
     await this.messageInput.fill(message);
-    // await this.submitPartialApproveBtn.click();
-    // await expect(this.partialApproveHeader).not.toBeVisible();
+  }
+
+  async submitPartialApprove() {
+    await this.submitPartialApproveBtn.click();
+    await expect(this.partialApproveHeader).not.toBeVisible();
   }
 }

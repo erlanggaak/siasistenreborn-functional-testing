@@ -1,0 +1,24 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "siasisten"
+  },
+  "dosen": {
+    "username": "dosen",
+    "password": "siasisten"
+  },
+  "filter": {
+    "term": "2024/2025 - Genap"
+  },
+  "course": {
+    "code": "CSCM603228"
+  },
+  "studentLog": {
+    "name": "Erlangga Ahmad Khadafi",
+    "logDescription": "Mengoreksi Part B di kelas",
+    "date": "15 Mei 2025",
+    "time": "13:00 - 16:45",
+    "partialMinutes": 30,
+    "partialReason": "Partial approval for testing"
+  }
+}
