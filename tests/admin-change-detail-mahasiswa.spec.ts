@@ -20,7 +20,7 @@ test.describe('Admin Ubah Detail Mahasiswa di Daftar Mahasiswa', () => {
     await expect(page.getByText('Daftar Mahasiswa')).toBeVisible();
   });
 
-  test('Admin mengubah jenjang & pengalaman satu mahasiswa', async ({ page, daftarMahasiswaPage }) => {
+  test('Admin mengubah jenjang satu mahasiswa', async ({ page, daftarMahasiswaPage }) => {
     await test.step(`Cari ${targetStudent}`, async () => {
       await daftarMahasiswaPage.typeSearch(targetStudent);
       await daftarMahasiswaPage.clickCari();
@@ -34,6 +34,20 @@ test.describe('Admin Ubah Detail Mahasiswa di Daftar Mahasiswa', () => {
       await daftarMahasiswaPage.waitForSuccessToast('berhasil');
     });
 
+    await test.step('Verifikasi perubahan', async () => {
+      const info = await daftarMahasiswaPage.getRowInfo(targetStudent);
+      expect(info.jenjang).toBe(singleJenjang);
+    });
+  });
+
+  test('Admin mengubah pengalaman satu mahasiswa', async ({ page, daftarMahasiswaPage }) => {
+    await test.step(`Cari ${targetStudent}`, async () => {
+      await daftarMahasiswaPage.typeSearch(targetStudent);
+      await daftarMahasiswaPage.clickCari();
+      await page.waitForTimeout(5_000);
+      await expect(daftarMahasiswaPage.rowByName(targetStudent)).toBeVisible();
+    });
+
     await test.step('Ubah Pengalaman', async () => {
       await daftarMahasiswaPage.changePengalaman(targetStudent, singleExp);
       await daftarMahasiswaPage.confirmPengalamanChange();
@@ -42,7 +56,6 @@ test.describe('Admin Ubah Detail Mahasiswa di Daftar Mahasiswa', () => {
 
     await test.step('Verifikasi perubahan', async () => {
       const info = await daftarMahasiswaPage.getRowInfo(targetStudent);
-      expect(info.jenjang).toBe(singleJenjang);
       expect(info.pengalaman).toBe(singleExp);
     });
   });
